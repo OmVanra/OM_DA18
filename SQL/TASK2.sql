@@ -54,45 +54,126 @@ VALUES
 (1029, 'Isha Patel', 'Luxury Sofa', 'Furniture', 3, 78000, 12, 'Pune', 'Card', 'Rahul', 'VIP'),
 (1030, 'Dhruv Sharma', 'Business Laptop', 'Electronics', 2, 110000, 18, 'Bangalore', 'Online', 'Neha', 'VIP');
 
-
-SELECT * FROM transactions
+SELECT * FROM 
+transactions
 ORDER BY unit_price, quantity DESC;
 
-SELECT customer_name, product_name, category, quantity, unit_price, city FROM transactions 
+SELECT customer_name, product_name, category, quantity, unit_price, city FROM 
+transactions
 WHERE unit_price > 50000 AND quantity > 1;
 
-SELECT * FROM transactions
-WHERE unit_price > 25000 AND customer_type = 'Premium'
+SELECT * FROM 
+transactions
+WHERE customer_type = 'Premium' AND unit_price > 25000
 ORDER BY unit_price DESC;
 
-SELECT * FROM transactions
+SELECT * FROM
+transactions
 WHERE discount_percent > 15 AND quantity >= 3
 ORDER BY discount_percent DESC;
 
-SELECT customer_name, product_name, category, quantity, unit_price, city FROM transactions
+SELECT customer_name, product_name, category, quantity, unit_price, city FROM
+transactions
 WHERE city IN ('Ahmedabad','Mumbai','Delhi') AND unit_price > 20000
 ORDER BY city, unit_price DESC;
 
-SELECT customer_name, product_name, quantity, unit_price, payment_mode FROM transactions
-WHERE (payment_mode IN ('Online', 'Card')) AND (quantity > 2) AND (unit_price > 15000)
+SELECT customer_name, product_name, quantity, unit_price, payment_mode FROM 
+transactions
+WHERE payment_mode IN ('Online','Card') AND quantity > 2 AND unit_price > 15000
 ORDER BY quantity DESC;
 
-SELECT * FROM transactions 
-WHERE category IN ('Electronics', 'Furniture', 'Appliances') AND discount_percent < 10
+SELECT * FROM
+transactions
+WHERE category IN ('Electronics','Furniture','Appliances') AND discount_percent < 10
 ORDER BY discount_percent ASC;
 
-
-SELECT customer_name, customer_type, product_name, quantity, unit_price FROM transactions 
-WHERE customer_type IN ('Premium', 'Regular') AND (unit_price > 30000) AND (quantity > 1)
+SELECT customer_name, customer_type, product_name, quantity, unit_price FROM 
+transactions
+WHERE customer_type IN ('Premium','Regular') AND unit_price > 30000 AND quantity > 1
 ORDER BY unit_price DESC;
 
-SELECT transaction_id,customer_name, product_name, quantity, unit_price, category FROM transactions
+SELECT * FROM 
+transactions
+WHERE quantity > 4 AND discount_percent < 20
+ORDER BY quantity DESC;
+
+SELECT transaction_id, customer_name, product_name, quantity, unit_price, category FROM 
+transactions
 WHERE (quantity > 5 AND unit_price > 10000) OR (quantity BETWEEN 2 AND 5 AND unit_price > 50000)
 ORDER BY unit_price DESC;
 
-SELECT * FROM transactions
-WHERE quantity > 2 AND unit_price > 20000 AND payment_mode NOT IN  ('Cash')
+SELECT * FROM
+transactions
+WHERE quantity > 2 AND unit_price > 20000 AND payment_mode NOT IN ('Cash')
 ORDER BY unit_price DESC;
 
-SELECT customer_name, product_name, quantity, unit_price,discount_percent,customer_type FROM transactions
-WHERE unit_price 
+SELECT customer_name, product_name, quantity, unit_price, discount_percent, customer_type FROM 
+transactions
+WHERE unit_price > 40000 AND quantity > 1 AND discount_percent < 15
+ORDER BY unit_price DESC;
+
+SELECT customer_name, product_name, quantity, unit_price, discount_percent, city FROM 
+transactions
+WHERE category IN ('Furniture') AND quantity > 3 AND unit_price > 25000
+ORDER BY quantity DESC;
+
+SELECT * FROM
+transactions
+WHERE customer_type IN ('Premium') AND payment_mode NOT IN ('Cash') AND quantity > 1 AND unit_price > 20000
+ORDER BY unit_price DESC;
+
+SELECT customer_name, product_name, category, unit_price, discount_percent, payment_mode FROM 
+transactions
+WHERE unit_price > 50000 AND discount_percent > 10 AND payment_mode NOT IN ('Cash')
+ORDER BY discount_percent DESC;
+
+SELECT * FROM 
+transactions
+WHERE (category IN ('Electronics') AND quantity > 2 AND discount_percent < 15) OR 
+(category IN ('Furniture') AND quantity > 3 AND unit_price > 20000) OR 
+(category IN ('Appliance') AND unit_price > 40000)
+ORDER BY unit_price DESC;
+
+SELECT customer_name, customer_type, product_name, quantity, unit_price, city, payment_mode FROM 
+transactions
+WHERE customer_type IN ('Premium','VIP') AND city NOT IN ('Ahmedabad') AND (quantity > 3 OR unit_price > 60000)
+ORDER BY unit_price DESC;
+
+SELECT * FROM 
+transactions
+WHERE discount_percent > 20 AND quantity > 2 AND unit_price < 50000
+AND payment_mode NOT IN ('Cash') AND city NOT IN ('Mumbai')
+ORDER BY discount_percent DESC;
+
+SELECT transaction_id, customer_name, product_name, category, quantity, unit_price, discount_percent, customer_type, payment_mode, city, salesperson 
+FROM 
+transactions
+WHERE ((customer_type IN ('Premium') AND category = 'Electronics' AND unit_price > 40000) OR 
+(customer_type IN ('VIP') AND unit_price > 50000) OR 
+(customer_type IN ('Regular') AND quantity > 5 AND unit_price > 10000)) AND 
+payment_mode NOT IN ('Cash')
+ORDER BY unit_price DESC;
+
+SELECT transaction_id,
+       customer_name,
+       product_name,
+       category,
+       quantity,
+       unit_price,
+       discount_percent,
+       city,
+       payment_mode,
+       salesperson,
+       customer_type
+FROM transactions
+WHERE (
+(customer_type = 'Premium' AND category = 'Electronics' AND unit_price > 35000) OR 
+(customer_type = 'VIP' AND category = 'Furniture' AND quantity > 2) OR 
+(customer_type = 'Regular' AND unit_price > 75000)
+) 
+AND discount_percent <= 25
+AND payment_mode NOT IN ('Cash')
+AND city NOT IN ('Ahmedabad')
+ORDER BY unit_price, quantity, discount_percent DESC;     
+
+
