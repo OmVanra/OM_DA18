@@ -12,71 +12,63 @@ FROM dbo.retailStore;
 -- Find missing values
 SELECT
     SUM(CASE
-        WHEN [Transaction_ID] IS NULL
-          OR LTRIM(RTRIM([Transaction_ID])) = ''
+        WHEN Transaction_ID IS NULL
+          OR LTRIM(RTRIM(Transaction_ID)) = ''
         THEN 1 ELSE 0
     END) AS missing_transaction_id,
 
     SUM(CASE
-        WHEN [Customer_ID] IS NULL
-          OR LTRIM(RTRIM([Customer_ID])) = ''
+        WHEN Customer_ID IS NULL
+          OR LTRIM(RTRIM(Customer_ID)) = ''
         THEN 1 ELSE 0
     END) AS missing_customer_id,
 
     SUM(CASE
-        WHEN [Category] IS NULL
-          OR LTRIM(RTRIM([Category])) = ''
+        WHEN Category IS NULL
+          OR LTRIM(RTRIM(Category)) = ''
         THEN 1 ELSE 0
     END) AS missing_category,
 
     SUM(CASE
-        WHEN [Item] IS NULL
-          OR LTRIM(RTRIM([Item])) = ''
+        WHEN Item IS NULL
+          OR LTRIM(RTRIM(Item)) = ''
         THEN 1 ELSE 0
     END) AS missing_item,
 
     SUM(CASE
-        WHEN [Price_Per_Unit] IS NULL
+        WHEN Price_Per_Unit IS NULL
         THEN 1 ELSE 0
     END) AS missing_price,
 
     SUM(CASE
-        WHEN [Quantity] IS NULL
+        WHEN Quantity IS NULL
         THEN 1 ELSE 0
     END) AS missing_quantity,
 
     SUM(CASE
-        WHEN [Total_Spent] IS NULL
+        WHEN Total_Spent IS NULL
         THEN 1 ELSE 0
     END) AS missing_total,
 
     SUM(CASE
-        WHEN [Payment_Method] IS NULL
-          OR LTRIM(RTRIM([Payment_Method])) = ''
+        WHEN Payment_Method IS NULL
+          OR LTRIM(RTRIM(Payment_Method)) = ''
         THEN 1 ELSE 0
     END) AS missing_payment,
 
     SUM(CASE
-        WHEN [Transaction_Date] IS NULL
+        WHEN Transaction_Date IS NULL
         THEN 1 ELSE 0
     END) AS missing_date,
 
     SUM(CASE
-        WHEN [Discount_Applied] IS NULL
+        WHEN Discount_Applied IS NULL
         THEN 1 ELSE 0
     END) AS missing_discount
 
 FROM retailStore;
 
 -- Find duplicate transaction IDs
-
-SELECT *
-INTO retailStore_Backup
-FROM retailStore;
-
-SELECT COUNT(*) as row_count
-FROM retailStore_Backup;
-
 
 SELECT 
     Transaction_ID,
@@ -288,3 +280,66 @@ WHERE Quantity IS NULL
   AND Total_Spent IS NULL
 GROUP BY Customer_ID
 ORDER BY MissingRows DESC;
+
+
+DELETE FROM retailStore_Clean
+WHERE Quantity IS NULL
+AND Total_Spent IS NULL;
+
+SELECT
+    SUM(CASE
+        WHEN Transaction_ID IS NULL
+          OR LTRIM(RTRIM(Transaction_ID)) = ''
+        THEN 1 ELSE 0
+    END) AS missing_transaction_id,
+
+    SUM(CASE
+        WHEN Customer_ID IS NULL
+          OR LTRIM(RTRIM(Customer_ID)) = ''
+        THEN 1 ELSE 0
+    END) AS missing_customer_id,
+
+    SUM(CASE
+        WHEN Category IS NULL
+          OR LTRIM(RTRIM(Category)) = ''
+        THEN 1 ELSE 0
+    END) AS missing_category,
+
+    SUM(CASE
+        WHEN Item IS NULL
+          OR LTRIM(RTRIM(Item)) = ''
+        THEN 1 ELSE 0
+    END) AS missing_item,
+
+    SUM(CASE
+        WHEN Price_Per_Unit IS NULL
+        THEN 1 ELSE 0
+    END) AS missing_price,
+
+    SUM(CASE
+        WHEN Quantity IS NULL
+        THEN 1 ELSE 0
+    END) AS missing_quantity,
+
+    SUM(CASE
+        WHEN Total_Spent IS NULL
+        THEN 1 ELSE 0
+    END) AS missing_total,
+
+    SUM(CASE
+        WHEN Payment_Method IS NULL
+          OR LTRIM(RTRIM(Payment_Method)) = ''
+        THEN 1 ELSE 0
+    END) AS missing_payment,
+
+    SUM(CASE
+        WHEN Transaction_Date IS NULL
+        THEN 1 ELSE 0
+    END) AS missing_date,
+
+    SUM(CASE
+        WHEN Discount_Applied IS NULL
+        THEN 1 ELSE 0
+    END) AS missing_discount
+
+FROM retailStore_Clean;
